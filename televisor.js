@@ -1,20 +1,26 @@
-module.exports = Electrodomestico = require("./Electrodomestico");
+let Electrodomestico = require("./Electrodomestico");
 
-class Televisor extends Electrodomestico {
-  constructor(consumo, procedencia, precio, pulgadas, tdt) {
-    super.precio = 0.0;
-    super.consumo = consumo;
-    super.procedencia = procedencia;
+module.exports = class televisor extends Electrodomestico {
+  constructor(consumo, procedencia, pulgadas, tdt) {
+    super(consumo, procedencia);
     this.pulgadas = pulgadas;
     this.tdt = tdt;
   }
-  obtenerPrecioPul() {
-    add = this.pulgadas <= 40 ? 0 : 0.3;
-    super.sumarAdicional(this.precio * add);
+  obtenerPrecio() {
+    super.precioBase();
+    this.obtenerPrecioPul();
+    this.obtenerPrecioTdt();
   }
 
-  //   obtenerPrecioTdt(){
-  //       if ()
+  obtenerPrecioPul() {
+    let add = this.pulgadas <= 40 ? 0 : 0.3;
+    return super.sumarAdicional(this.precio * add);
+  }
 
-  //   }
-}
+  obtenerPrecioTdt() {
+    if (this.tdt) {
+      super.sumarAdicional(250000);
+      console.log("TV con TDT");
+    }
+  }
+};
